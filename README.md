@@ -145,8 +145,13 @@ docker build -t imagename .
 ```
 **Step 6:** Check if image has been created
 ```
+# lists the docker images
 docker images
+
+# image will be running on port 81 forwarding requests to port 80 inside the container
 docker run -d -p 81:80 samiha-image:v1
+
+# check if you are logged into docker
 docker login
 ```
 **Step 7:** Create a tag
