@@ -26,7 +26,7 @@ Containers are lightweight, portable, and self-sufficient units that can run app
 
 - **Simplified Testing:** Eases testing in various environments without complications.
 
-### Setting up Docker 
+### Setting up Docker & Useful commands
 
 Check if Docker is installed:
 ```
