@@ -97,7 +97,12 @@ sudo nano index.html
 ```
 ### Building an Image and Pushing to Docker Hub
 
-1. Create an index.html file locally and save
+**Step 1:** Manually create a new Directory 
+- Inside the create a `dockerfile` with no extension
+
+![alt text](Images/df.png)
+
+**Step 2:** Create an index.html file inside the new directory `Docker` and save
 ```
 <h1>Samiha Uddin</h1>
 <p>Samiha is a driven and dedicated Psychology graduate with a strong desire and determination to advance in the Technology sector.</p>
@@ -111,7 +116,7 @@ Commercial support is available at
 </body>
 </html>
 ```
-2. Create a default file 
+**Step 3:** Create a default file inside the new directory `Docker` and save
 ```
 server {
     listen 80 default_server;
@@ -126,7 +131,7 @@ server {
     }
 }
 ```
-3. In your dockerfile enter the following:
+**Step 4:** In your dockerfile enter the following:
 ```
 FROM ubuntu:18.04  
 LABEL maintainer="samihauddin@live.co.uk" 
@@ -136,21 +141,21 @@ COPY files/index.html /usr/share/nginx/html/index.html
 EXPOSE 80
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
 ```
-4. Build your image
+**Step 5:** Build your image
 ```
 docker build -t imagename .
 ```
-5. Check if image has been created
+**Step 6:** Check if image has been created
 ```
 docker images
 docker run -d -p 81:80 samiha-image:v1
 docker login
 ```
-6. Create a tag
+**Step 7:** Create a tag
 ```
 docker tag samiha-image:v1 samihauddin/samiha-image:v1
 ```
-7. Push your image to DockerHub
+**Step 8:** Push your image to Docker Hub
 ```
 docker push samihauddin/samiha-image:v1
 ```
