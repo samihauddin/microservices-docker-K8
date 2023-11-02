@@ -106,7 +106,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 30010
+      nodePort: 30080
   type: NodePort
 ```
 **Step 3:** Run the YAML file
@@ -115,7 +115,7 @@ kubectl create -f nginx-service.yml
 ```
 **Successful output:**
 
-Your Nginx pods should now be running when you search `localhost:30010` in your web browser.
+Your Nginx pods should now be running when you search `localhost:30080` in your web browser.
 
 
 ### K8 Clusters
