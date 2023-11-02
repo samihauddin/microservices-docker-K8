@@ -126,3 +126,54 @@ A cluster in Kubernetes consists of a master node (which manages the cluster) an
 The master node controls and manages the cluster's state, including scaling, upgrades, and deployments.
 
 ![alt txt](Images/cluster.png)
+
+### Deploy Node-app in the same cluster
+
+**Step 1:** Create a file `node-deploy.yml`
+
+Input the following:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deploy
+spec:
+  replicas: 2  
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: node-app
+          image: samihauddin/sparta-app-2:latest 
+          ports:
+            - containerPort: 3000 
+```
+
+**Step 2:** Create `node-service.yml`
+
+Input the following:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-service
+spec:
+  selector:
+    app: node-app
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30100
+```
+**Successful output:**
+
+![alt txt](Images/lh.png)
+![alt txt](Images/ta.png)
