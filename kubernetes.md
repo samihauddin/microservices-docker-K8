@@ -2,11 +2,11 @@
 
 Kubernetes is an **open-source platform** designed to **automate deploying, scaling, and operating** application containers. 
 
-K8 deployment needs multiple instances called **pods**. Each pod has its own ip, that's why it is attachable and detachable.
 
 ### Why do we need k8?
 
-K8 allows docker containers to become scalable by creating **k8 deployment replicas** so if one goes down the others will be unaffected. The load balancer diverts the traffic and reroutes the traffic.
+- K8 allows docker containers to become scalable by creating **k8 deployment replicas** so if one goes down the others will be unaffected. 
+- The load balancer diverts the traffic and reroutes the traffic.
 
 ### What are the benefits of k8?
 
@@ -23,6 +23,8 @@ K8 allows docker containers to become scalable by creating **k8 deployment repli
 ### K8 Architecture?
 
 ![alt txt](Images/p1.png)
+
+K8 deployment needs multiple instances called **pods**. Each pod has its own ip, that's why it is attachable and detachable.
 
 ### When not to use it?
 - If your application is small, minimal complexity, using Kubernetes might be overkill.
@@ -76,11 +78,43 @@ kubectl get pods
 ```
 ![alt txt](Images/pods.png)
 
-Step 3: Deleting a Pod
+**Step 3:** Deleting a Pod
 ```
-kubectl delete pod filename
+kubectl delete pod <name-of-pod>
 ```
 
+### Enabling Local Host 
+
+**Step 1:** Create a `nginx-service.yml` file
+
+**Step 2:** Inside the file input the following:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30080
+  type: NodePort
+```
+**Step 3:** Run the YAML file
+```
+kubectl create -f nginx-service.yml
+```
+**Successful output:**
+
+![alt txt](Images/30.png)
+
 ### K8 Clusters
+
+A cluster in Kubernetes consists of a master node (which manages the cluster) and worker nodes (where applications run). 
+
+The master node controls and manages the cluster's state, including scaling, upgrades, and deployments.
 
 ![alt txt](Images/kc.png)
