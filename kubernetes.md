@@ -32,6 +32,10 @@ K8 deployment needs multiple instances called **pods**. Each pod has its own ip,
 - Limited resources
 
 ### Enabling K8 on Docker Desktop
+- Navigate to Docker Desktop
+- Select `settings`
+- Enable Kubernetes
+- Select `Apply and Restart`
 
 ![alt txt](Images/k8.png)
 
@@ -83,7 +87,7 @@ kubectl get pods
 kubectl delete pod <name-of-pod>
 ```
 
-### Enabling Local Host 
+### Enabling Local Host to run
 
 **Step 1:** Create a `nginx-service.yml` file
 
