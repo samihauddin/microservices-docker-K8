@@ -117,6 +117,7 @@ kubectl create -f nginx-service.yml
 
 Your Nginx pods should now be running when you search `localhost:30080` in your web browser.
 
+**Node port rages from 30000-32767**
 
 ### K8 Clusters
 
@@ -124,4 +125,4 @@ A cluster in Kubernetes consists of a master node (which manages the cluster) an
 
 The master node controls and manages the cluster's state, including scaling, upgrades, and deployments.
 
-![alt txt](Images/kc.png)
+![alt txt](Images/cluster.png)
