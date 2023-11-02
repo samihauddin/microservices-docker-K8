@@ -40,7 +40,7 @@ docker run -d -p 3000:3000 sparta-app-2
 
 **Successful output**
 
-![alt txt](output.png)
+![alt txt](Images/output.png)
 
 **Step 7.** Create tag 
 ```
@@ -53,7 +53,7 @@ docker push samihauddin/sparta-app-2
 
 **Successful output** 
 
-![alt txt](img.png)
+![alt txt](Images/img.png)
 
 ### Task 2
 

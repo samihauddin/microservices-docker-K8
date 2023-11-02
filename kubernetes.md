@@ -1,15 +1,12 @@
 ### What is Kubernetes (K8)?
 
-Kubernetes is an open-source platform designed to automate deploying, scaling, and operating application containers. 
+Kubernetes is an **open-source platform** designed to **automate deploying, scaling, and operating** application containers. 
 
-It groups containers that make up an application into logical units for easy management and discovery.
-
-K8 deployment needs multiple instances called `pods`
-each pod has its own ip, that's why it is attachable and detachable.
+K8 deployment needs multiple instances called **pods**. Each pod has its own ip, that's why it is attachable and detachable.
 
 ### Why do we need k8?
 
-K8 allows docker containers to become scalable by creating k8 deployment replicas so if one goes down the others will be unaffected. The load balancer diverts the traffic and reroutes the traffic.
+K8 allows docker containers to become scalable by creating **k8 deployment replicas** so if one goes down the others will be unaffected. The load balancer diverts the traffic and reroutes the traffic.
 
 ### What are the benefits of k8?
 
@@ -25,13 +22,16 @@ K8 allows docker containers to become scalable by creating k8 deployment replica
 
 ### K8 Architecture?
 
+![alt txt](Images/p1.png)
+
 ### When not to use it?
-- If your application is small and has minimal complexity, using Kubernetes might be overkill.
+- If your application is small, minimal complexity, using Kubernetes might be overkill.
 - If your workloads are consistent, predictable, and don't need to scale or change frequently
+- Limited resources
 
 ### Enabling K8 on Docker Desktop
 
-![alt txt](k8.png)
+![alt txt](Images/k8.png)
 
 ### Kubernetes commands 
 
@@ -44,3 +44,43 @@ Check if cluster is running
 kubectl get service
 kubectl get svc
 ```
+### Creating a YAML file to create PODS
+**Step 1:** Create a yaml file and input the following (Indentation is very important).
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: samihauddin/nginx-254:latest
+          ports:
+            - containerPort: 80
+```
+**Step 2:** Run the YAML file to create the pods <br>
+
+Creating K8 Pods
+```
+kubectl create -f nginx-deploy.yml
+kubectl get pods
+```
+![alt txt](Images/pods.png)
+
+Step 3: Deleting a Pod
+```
+kubectl delete pod filename
+```
+
+### K8 Clusters
+
+![alt txt](Images/kc.png)
