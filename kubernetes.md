@@ -75,9 +75,11 @@ spec:
 ```
 **Step 2:** Run the YAML file to create the pods <br>
 
-Creating K8 Pods
 ```
+# Creating pods
 kubectl create -f nginx-deploy.yml
+
+# Verifying if the pods are running
 kubectl get pods
 ```
 ![alt txt](Images/pods.png)
@@ -87,9 +89,9 @@ kubectl get pods
 kubectl delete pod <name-of-pod>
 ```
 
-### Enabling Local Host to run
+### Enabling Nginx pod to run
 
-**Step 1:** Create a `nginx-service.yml` file
+**Step 1:** Create a YAML file `nginx-service.yml`
 
 **Step 2:** Inside the file input the following:
 
@@ -112,6 +114,8 @@ spec:
 kubectl create -f nginx-service.yml
 ```
 **Successful output:**
+
+Your Nginx pods should now be running when you search `localhost:30080` in your web browser.
 
 ![alt txt](Images/30.png)
 
