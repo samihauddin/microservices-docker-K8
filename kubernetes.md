@@ -177,3 +177,175 @@ spec:
 
 ![alt txt](Images/lh.png)
 ![alt txt](Images/ta.png)
+
+### Mongo DB Cluster 
+
+1. Create a Directory containing your dockerfile and mongod.conf
+
+```
+# Use an official MongoDB image as a base
+FROM mongo:4.4
+ 
+# Copy a custom mongod.conf file that allows all connections
+COPY mongod.conf /etc/mongod.conf.orig
+ 
+# Expose the default MongoDB port
+EXPOSE 27017
+ 
+# Specify the command to run MongoDB with the custom config file
+CMD ["mongod"]
+```
+```
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+storage:
+  dbPath: /var/lib/mongodb
+#  engine:
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+
+
+# how the process runs
+processManagement:
+  timeZoneInfo: /usr/share/zoneinfo
+
+#security:
+
+#operationProfiling:
+
+#replication:
+
+#sharding:
+
+## Enterprise-Only Options:
+
+#auditLog:
+```
+2. Build your image 
+```
+docker build -t <db image> .
+```
+3. Run the image 
+4. Push to docker hub
+
+### Creating Mongo deployment and service YAML file 
+
+Deployment file
+```
+# Use spaces not a tab
+
+apiVersion: apps/v1 # which API to use for deployment
+kind: Deployment # pod - service what kind of service/object
+
+metadata:
+  name: mongo-deploy-2 # naming the deployment
+spec:
+  selector:
+    matchLabels:
+      app: mongo # look for this label to match with k8 service
+    # lets create a replica set of this with instances/pods
+  replicas: 3 #3 pods
+    # template to use its label for k8 service to launch in the browser
+  template:
+    metadata:
+      labels:
+        app: mongo # This label connects to the service or any other K8 components
+  # Lets define the container spec
+    spec:
+      containers:
+      - name: mongo
+        image: samihauddin/db:latest # use the image that you built in your dockerhub
+        ports:
+        - containerPort: 27017
+```
+Service file
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  selector:
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+  type: NodePort
+```
+Run the yaml file
+
+```
+kubectl create -f mongo-deploy-2.yml
+kubectl create -f mongo-service.yml
+```
+
+### Creating an Environment variable
+
+In the node-deploy.yml file add the environment variable 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deploy
+spec:
+  replicas: 2  # Adjust the number of replicas based on your computer's capacity
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: node-app
+          image: samihauddin/sparta-app-2:latest  # Replace with your Node.js app image
+          ports:
+            - containerPort: 3000  # Adjust if your app listens on a different port
+          env: 
+          - name: DB_HOST
+            value: mongodb://10.99.20.212:27017/posts
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh","-c",node seeds/seed.js]
+```
+Service file 
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-service
+spec:
+  selector:
+    app: node-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: NodePort
+```
+Re-run the node deployment and service
+```
+kubectl create -f node-deploy-2.yml
+kubectl create -f node-service.yml
+```
+
+**Successful output:**
+
+![alt txt](Images/p.png)
